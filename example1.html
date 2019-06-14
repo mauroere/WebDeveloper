@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!--CDN Animate.CSS-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+  <!--Font Awesome-->
+  <script src="https://use.fontawesome.com/33a0c4b290.js"></script>
+
+  <title>Formulario Simple usando Sweet Alert, AnimateCSS y Bootstrap 4 y validando con jQuery</title>
+</head>
+
+<body>
+  <h1>Formulario Simple usando Sweet Alert, AnimateCSS y Bootstrap 4 y validando con jQuery</h1>
+  <div class="container" style="padding-top: 100px">
+    <form id="formulario">
+      <input type="text" id="name" placeholder="Name" class="form-control" required>
+      <input type="email" aria-describedby="emailHelp" id="email" placeholder="nombre@algo.com" class="form-control"
+        required>
+      <input type="text" id="phone" placeholder="Teléfono" class="form-control" required>
+      <button type="button" id="submit" class="btn btn-primary">Enviar</button>
+    </form>
+  </div>
+
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <!-- Script Validador-->
+  <script>
+    // just for the demos, avoids form submit
+    $("#submit").click(function () {
+      let name = $("#name").val();
+      let phone = $("#phone").val();
+      let email = $("#email").val();
+      let valoresEmail = new RegExp(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/);
+
+      if (name == '' || phone == '' || email == '') {
+
+        // Error por campos vacios
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Todos los campos son obligatorios',
+          animation: false,
+          customClass: {
+            popup: 'animated tada'
+          }
+        })
+        // validación del formato del correo
+      } else if (!valoresEmail.test(email)) {
+
+        Swal.fire({
+          type: 'error',
+          title: 'Email incorrecto',
+          text: 'Ingrese un email válido',
+          animation: false,
+          customClass: {
+            popup: 'animated wobble'
+          }
+        })
+
+        return true;
+        // validación del formato del teléfono
+      } else if (isNaN(phone)) {
+
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Ingrese solo números',
+          animation: false,
+          customClass: {
+            popup: 'animated tada'
+          }
+        })
+        return true;
+
+      } else {
+
+        // Envio exitoso del formulario
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000
+        });
+
+        Toast.fire({
+          type: 'success',
+          title: 'Formulario Enviado'
+        })
+      }
+    })
+  </script>
+
+
+</body>
+
+</html>
